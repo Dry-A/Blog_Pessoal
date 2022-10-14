@@ -38,7 +38,10 @@ public class Postagem {
 	@JsonIgnoreProperties("postagem")
  	private Tema tema;
 	
-	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;//variavel criada agora do tipo model.usuario
+							//referencia da chave estrangeira
 
     /*Insira os Getters and Setters*/
 
@@ -82,4 +85,13 @@ public class Postagem {
         this.data = data;
     }
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+    
 }
