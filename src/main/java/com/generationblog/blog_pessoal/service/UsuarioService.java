@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import com.generationblog.blog_pessoal.model.Usuario;
+import com.generationblog.blog_pessoal.model.UsuarioLogin;
 import com.generationblog.blog_pessoal.repository.UsuarioRepository;
 
 @Service
@@ -70,4 +71,7 @@ public class UsuarioService {
 		byte[] estruturaBase64 = Base64.encodeBase64(estrutura.getBytes(Charset.forName("US-ASCII")));
 		return "Basic " + new String(estruturaBase64);
 	}
+
+	
+	
 }
