@@ -1,5 +1,6 @@
 package com.generationblog.blog_pessoal.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	//variavel usuario email em model(string é o tipo 
 	//findBy já é predeterminado
 	//Find = SELECT/ By = Where / Usuario = coluna usuário da tabela
+	
+	public List<Usuario> findAllByNomeContainingIgnoreCase(String nome);
+
 
 }
 
