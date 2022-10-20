@@ -3,7 +3,7 @@ package com.generationblog.blog_pessoal.service;
 import java.nio.charset.Charset;
 import java.util.Optional;
 import javax.validation.constraints.Null;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,6 +72,26 @@ public class UsuarioService {
 		return "Basic " + new String(estruturaBase64);
 	}
 
-	
+	public Optional<UsuarioLogin> logarUsuario(Optional<UsuarioLogin> usuarioLogin){
+		Optional<Usuario> usuario = usuarioRepository
+				.findByUsuario(usuarioLogin.get().getUsuario());
+		
+		if (usuario.isPresent()) {
+			if(compararSenhas(usuarioLogin.get().getSenha(),
+					usuario.get().getSenha())) {
+				
+				usuarioLogin.get().setId(usuario.get().getId());
+				usuarioLogin.get().setNome(usuario.get().getNome());
+				usuarioLogin.get().setFoto(usuario.get().getFoto());
+				usuarioLogin.get().setToken(gerarBasicToken(usuarioLogin.get().getUsuario(),
+						usuarioLogin.get().getSenha()));
+				usuarioLogin.get().setSenha(usuario.get().getSenha());
+				
+				return usuarioLogin;
+			}
+		}
+		
+		throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário ou senha inválidos", null);
+	}
 	
 }
